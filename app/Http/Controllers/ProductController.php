@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Model\Product;
 use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\Product\ProductCollection;
 // app/Http/Resources/Product/ProductResource.php
 
 class ProductController extends Controller
@@ -18,7 +19,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        // return Product::all();
+        // return ProductResource::collection(Product::all()); //shows everything from resource
+        // return new ProductCollection(Product::all()); //shows everything from resource but gives an error saying the 'name' property do not exist due the "new" statement
+        return ProductCollection::collection(Product::all()); //shows everything from resource
     }
 
     /**
