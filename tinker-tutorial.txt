@@ -1,0 +1,8 @@
+- chama o produto de id 4
+App\Model\Product::find(4) 
+
+
+
+
+- chama as reviews do produto de id 4
+App\Model\Product::find(4)->reviews
