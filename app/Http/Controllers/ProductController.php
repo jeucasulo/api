@@ -22,7 +22,7 @@ class ProductController extends Controller
         // return Product::all();
         // return ProductResource::collection(Product::all()); //shows everything from resource
         // return new ProductCollection(Product::all()); //shows everything from resource but gives an error saying the 'name' property do not exist due the "new" statement
-        return ProductCollection::collection(Product::all()); //shows everything from resource
+        return ProductCollection::collection(Product::paginate(20)); //shows everything from resource //could use ::all();
     }
 
     /**
