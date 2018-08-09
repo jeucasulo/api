@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 use App\Model\Product;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\ProductCollection;
+use Symfony\Component\HttpFoundation\Response;
+// use App\Http\Requests\ProductRequest;
+
 // app/Http/Resources/Product/ProductResource.php
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth:api')->except('index','show');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,9 +47,21 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(\App\Http\Requests\ProductRequest $request)
     {
-        //
+        $product = new Product();
+        $product->name = $request->name;
+        $product->detail = $request->description;
+        $product->stock = $request->stock;
+        $product->price = $request->price;
+        $product->discount = $request->discount;
+
+        $product->save();
+
+        // return $request->all();
+        return response([
+            'data' => new ProductResource($product)
+        ],Response::HTTP_CREATED); // or just ,200); instead Response::
     }
 
     /**
